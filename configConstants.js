@@ -3,7 +3,7 @@
 function configConstants () {}
 
 configConstants.getToken = function () {
-	return "";
+	return "insert your token here";
 }
 
 module.exports = configConstants;
