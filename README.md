@@ -9,3 +9,16 @@ A simple game to allow people in a slack channel to remember the names of the us
 - "pod install"
 - "open FriendlyGame.xcworkspace" with xcode
 - run the app in the simulator or on your device (for now only iPhone 6 plus supported, there are some issues with the layout that is not optimised for other devices, to be fixed soon).
+
+##Config file
+create a file called configConstants.js in the main directory, with the following code:
+```
+'use strict';
+
+function configConstants () {}
+
+configConstants.getToken = function () {
+	return "insert your token here";
+}
+
+module.exports = configConstants; ```
