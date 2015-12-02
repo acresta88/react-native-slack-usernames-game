@@ -60,17 +60,19 @@ var IntroScreen = React.createClass({
   
   render: function() {
 
-    return (        
-        <View style={styles.imageContainer}>
-          <TouchableHighlight 
-          onPress={this._handleNextButtonPress}>
-            <Image 
-            style={styles.image} 
-            resizeMode={'contain'}
-            source={require('../../assets/logo.png')}
-            />
-           </TouchableHighlight>
-        </View>
+    return ( 
+    <TouchableHighlight 
+      style={{flex:1}}
+      onPress={this._handleNextButtonPress}>       
+        
+      <View style={styles.imageContainer}>  
+          <Image 
+          style={styles.image} 
+          resizeMode={'contain'}
+          source={require('../../assets/logo.png')}
+          />
+      </View>
+    </TouchableHighlight>
     );
   }
 });
@@ -80,7 +82,11 @@ image: {
     width: 200,
     height: 100,
   },
-  imageContainer: {flex: 1, alignItems: 'center', justifyContent: 'center'}
+  imageContainer: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  }
 });
 
 module.exports = IntroScreen;

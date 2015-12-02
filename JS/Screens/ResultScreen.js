@@ -14,6 +14,7 @@ var {
   Platform,
   Animated,
   Component,
+  PixelRatio,
   PropTypes,
   requireNativeComponent
 } = React;
@@ -104,7 +105,7 @@ var ResultScreen = React.createClass({
       	<View style= {styles.containerDetails}>
       		<Image
             source={{uri: this.props.user.avatar}}
-            style={styles.image}
+            style={_getImageStyle()}
           />
         	{correctPerson}
         	{label}
@@ -126,6 +127,14 @@ var ResultScreen = React.createClass({
 
 });
 
+function _getImageStyle (){
+  var value = PixelRatio.get();
+  var size = 70 * value;
+  return {
+    width: size,
+    height: size,
+  }
+}
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -137,15 +146,11 @@ var styles = StyleSheet.create({
   	flex: 0.65,
   	alignItems: 'center',
   },
-  image: {
-  	width: 200,
-  	height: 200,
-  },
   textMarginWin: {
-		marginTop: 40,
+		marginTop: 30,
   },
   textMarginLost: {
-		marginTop: 25,
+		marginTop: 15,
   },
   text: {
     fontSize: 15,

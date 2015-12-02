@@ -25,15 +25,6 @@ var AvatarCell = React.createClass({
   },
   _orientationDidChange: function(orientation) {
     this.setState({orientation: orientation});
-    this.render();
-    
-    if(orientation == 'LANDSCAPE'){
-      //do something with landscape layout
-      log.info("landscape");
-    }else{
-      //do something with portrait layout
-      log.info("portrait");
-    }
   },
 
   componentDidMount: function(){
@@ -79,11 +70,6 @@ var elemsForLine = 3;
 function _getImageStyle(orientation): StyleObj {
   
   var pageWidth = windowSize.width;
-  if(orientation == 'LANDSCAPE'){
-    //do something with landscape layout
-    pageWidth = windowSize.height;
-    log.info("landscape");
-  }
 
   var width = Math.trunc(pageWidth / elemsForLine);
   var height = width;

@@ -346,10 +346,6 @@ var styles = StyleSheet.create({
   centerText: {
     alignItems: 'center',
   },
-  logsText: {
-    marginTop: 80,
-    color: '#888888',
-  }
 });
 
 module.exports = GridScreen;

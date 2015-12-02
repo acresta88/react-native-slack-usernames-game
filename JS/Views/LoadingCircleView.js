@@ -15,14 +15,17 @@ var {
   Animated,
   Component,
   PropTypes,
+  PixelRatio,
   requireNativeComponent
 } = React;
 
 
 var Spinner = require('react-native-spinkit');
 
-let CIRCLE_SIZE = 80;
-let CIRCLE_MARGIN = 20;
+var value = PixelRatio.get();
+
+let CIRCLE_SIZE = 50 + 10 * value;
+let CIRCLE_MARGIN = 10 + 5 * value;
 
 class LoadingCircleView extends React.Component {
 

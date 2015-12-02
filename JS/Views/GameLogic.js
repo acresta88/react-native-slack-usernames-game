@@ -6,7 +6,8 @@ var {
   Text,
   View,
   Navigator,
-  Image
+  Image,
+  PixelRatio
 } = React;
 
 var log = require('loglevel');
@@ -29,30 +30,33 @@ var GameLogic = React.createClass({
       log.info('in start flow');
       var text = user ? ('Who is') : 'no seleted user';
       var text2 = user ? user.name + '?' : '';
-      content = <Text numberOfLines={1} style={styles.gameText}>{text}</Text>;
-      content2 = <Text numberOfLines={1} style={styles.gameTextName}>{text2}</Text>;
+      content = <Text numberOfLines={1} style={_getGameText()}>{text}</Text>;
+      content2 = <Text numberOfLines={1} style={_getGameTextName()}>{text2}</Text>;
     }
     else if (state == "won") {
       var text = user ? ('It totally was!') : 'no user';
       var text2 = user ? user.name : '';
-      content = <Text numberOfLines={1} style={styles.gameText}>{text}</Text>;
-      content2 = <Text numberOfLines={1} style={styles.gameTextName}>{text2}</Text>;
+      content = <Text numberOfLines={1} style={_getGameText()}>{text}</Text>;
+      content2 = <Text numberOfLines={1} style={_getGameTextName()}>{text2}</Text>;
       image = <Image source={require("../../assets/blue_line.png")} style={_getImageStyle()} resizeMode={'contain'}/>;
     }
     else if (state == "lost") {
       var text = user ? ('Nope! that was ' + selectedUser.name +'.') : 'no user';
 
-      content = <Text numberOfLines={1} style={styles.gameText}>{text}</Text>;
+      content = <Text numberOfLines={1} style={_getGameText()}>{text}</Text>;
       image = <Image source={require("../../assets/red_line.png")} style={_getImageStyle()} resizeMode={'contain'}/>;
     } else {
-      content = <Text numberOfLines={1} style={styles.gameText}>no users</Text>;
+      content = <Text numberOfLines={1} style={_getGameText()}>no users</Text>;
     }
 
     return (
-        <View style={[styles.gameLogicContainer, styles.centerText]}>
-          {content}
-          {content2}
-          {image}
+        <View style={styles.gameLogicContainer}>
+          <View style={styles.gameSpacer} />
+          <View style={[styles.gameTextContainer, , styles.centerText]}>
+            {content}
+            {content2}
+            {image}
+          </View>
         </View>
       );
   }
@@ -75,6 +79,28 @@ function _getImageStyle(orientation): StyleObj {
   };
 }
 
+function _getGameText() {
+
+  var value = PixelRatio.get();
+
+  var fontSize = 5 + value * 5;
+
+  return {
+    fontSize: fontSize,
+    color: '#dddddd',
+  }
+}
+function _getGameTextName() {
+  var value = PixelRatio.get();
+
+  var fontSize = 10 + value * 10;
+  return {
+    marginTop: 20,
+    fontSize: fontSize,
+    color: '#dddddd',
+  }
+}
+
 var styles = StyleSheet.create({
   gameLogicContainer: {
     flex: 0.35,
@@ -83,15 +109,11 @@ var styles = StyleSheet.create({
   centerText: {
     alignItems: 'center',
   },
-  gameText: {
-    marginTop: 80,
-    fontSize: 20,
-    color: '#dddddd',
+  gameSpacer: {
+    flex: 0.10,
   },
-  gameTextName: {
-    marginTop: 20,
-    fontSize: 40,
-    color: '#dddddd',
+  gameTextContainer: {
+    flex: 0.25
   },
   
 });
