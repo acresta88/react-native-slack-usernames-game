@@ -12,9 +12,13 @@ var {
   View
 } = React;
 
+var Device = require('react-native-device');
 
 var log = require("loglevel");
 var Orientation = require('react-native-orientation'); //only for ios
+
+var Dimensions = require('Dimensions');
+var windowSize = Dimensions.get('window');
 
 var AvatarCell = React.createClass({
   //setting initial stato for loading and datasource
@@ -63,10 +67,7 @@ var AvatarCell = React.createClass({
   }
 });
 
-var Dimensions = require('Dimensions');
-var windowSize = Dimensions.get('window');
-
-var elemsForLine = 3;
+var elemsForLine = Device.isIpad() ? 5 : 3;
 function _getImageStyle(orientation): StyleObj {
   
   var pageWidth = windowSize.width;

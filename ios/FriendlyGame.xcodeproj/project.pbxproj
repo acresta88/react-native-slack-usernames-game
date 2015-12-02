@@ -13,6 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6367186A6C694FA2EB01336A /* libPods-FriendlyGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF2CAB414AEF4970914E5 /* libPods-FriendlyGame.a */; };
+		655ACB4A1C0EFB0100599E01 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 655ACB491C0EFB0100599E01 /* DeviceUtil.m */; };
 		65C26FFC1C061B34007BBA12 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C26FFB1C061B34007BBA12 /* Orientation.m */; };
 		65CADDBC1C0DC79900A099FE /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B75D51C0DA0D100CACBF4 /* libRNSpinkit.a */; };
 		7C585BCB2FC2EB3E25473C1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B9B63FCCD5B4A37C9C3716 /* libPods.a */; };
@@ -46,6 +47,8 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FriendlyGame/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FriendlyGame/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FriendlyGame/main.m; sourceTree = "<group>"; };
+		655ACB481C0EFB0100599E01 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceUtil.h; path = "../node_modules/react-native-device/DeviceUtil.h"; sourceTree = "<group>"; };
+		655ACB491C0EFB0100599E01 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceUtil.m; path = "../node_modules/react-native-device/DeviceUtil.m"; sourceTree = "<group>"; };
 		657451F31C0890460001C481 /* FriendlyGame-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FriendlyGame-Bridging-Header.h"; sourceTree = "<group>"; };
 		657B75D01C0DA0D000CACBF4 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		65C26FFA1C061B34007BBA12 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
@@ -107,6 +110,15 @@
 			name = FriendlyGame;
 			sourceTree = "<group>";
 		};
+		655ACB4C1C0EFB1100599E01 /* DeviceUtil */ = {
+			isa = PBXGroup;
+			children = (
+				655ACB481C0EFB0100599E01 /* DeviceUtil.h */,
+				655ACB491C0EFB0100599E01 /* DeviceUtil.m */,
+			);
+			name = DeviceUtil;
+			sourceTree = "<group>";
+		};
 		657B75D11C0DA0D000CACBF4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +157,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				655ACB4C1C0EFB1100599E01 /* DeviceUtil */,
 				657451F31C0890460001C481 /* FriendlyGame-Bridging-Header.h */,
 				65C26FF91C061B34007BBA12 /* RCTOrientation */,
 				13B07FAE1A68108700A75B9A /* FriendlyGame */,
@@ -364,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C26FFC1C061B34007BBA12 /* Orientation.m in Sources */,
+				655ACB4A1C0EFB0100599E01 /* DeviceUtil.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
