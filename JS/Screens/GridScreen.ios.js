@@ -133,17 +133,19 @@ _handleSlackResponse: function(response) {
     this.props.navigator.pop();
   },
   _handleNextButtonPress: function() {
+    log.warn(this.state.target.name + '-' + this.state.selectedUser.name + '-' + this.state.gameStatus);
+
     this.props.navigator.push({
           component: ResultScreen,
           title: 'ResultScreen',
           passProps: { user: this.state.target,
                 selectedUser: this.state.selectedUser,
-                state: this.state.gameStatus},
+                state: this.state.gameStatus}
         });
   },
 
   _selectUser: function(user: Object) {
-    log.info('selected ' + user.name);
+    log.warn('selected ' + user.name);
 
     this.setState({selectedUser: user});
 
@@ -174,7 +176,7 @@ _handleSlackResponse: function(response) {
     rowID: number | string,
     highlightRowFunc: (sectionID: ?number | string, rowID: ?number | string) => void,
   ) {
-    log.warn("row " + user.name);
+    log.info("row " + user.name);
     return (
       <AvatarCell
         key={user.id}

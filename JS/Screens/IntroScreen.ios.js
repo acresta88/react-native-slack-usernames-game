@@ -42,6 +42,7 @@ var IntroScreen = React.createClass({
     this.props.navigator.pop();
   },
   _handleNextButtonPress: function() {
+    console.log('_handleNextButtonPress');
     this.props.navigator.push({
           component: GridScreen,
           title: 'GridScreen',
