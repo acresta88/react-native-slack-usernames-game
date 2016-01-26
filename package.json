@@ -8,6 +8,7 @@
   "dependencies": {
     "react-native": "*",
     "react-native-orientation": "*",
+    "react-native-orientation-listener": "*",
     "react-timer-mixin": "*",
     "loglevel": "*",
     "react-native-spinkit": "git+https://github.com/acresta88/react-native-spinkit.git",
