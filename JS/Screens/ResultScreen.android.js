@@ -16,31 +16,31 @@ var {
   Component,
   PixelRatio,
   PropTypes,
+  Component,
   requireNativeComponent
 } = React;
 
 var AvatarCell = require('../Views/AvatarCell');
-var TimerMixin = require('react-timer-mixin');
+import TimerMixin from 'react-timer-mixin';
 
 var log = require('loglevel');
 
+class ResultScreen extends Component {
 
-var ResultScreen = React.createClass({
+  constructor(props) {
+    super(props);
+    this.timer = undefined;
+    this.state = {
+      remainingTime: 4,
+      isTimerActive: false
+    };
+  }
 
-	mixins: [TimerMixin],
-
-	getInitialState: function() {
-		return {
-			remainingTime: 4,
-			isTimerActive: false
-		};
-	},
-
-	_handleBackButtonPress: function() {
+	_handleBackButtonPress() {
     this.props.navigator.pop();
-  },
-  _handleNextButtonPress: function() {
-  	
+  }
+
+  _handleNextButtonPress() {
   	if(this.state.isTimerActive) {
   		
   	}
@@ -53,13 +53,17 @@ var ResultScreen = React.createClass({
 	          passProps: { myProp: 'foo' }
 	    });  		
   	}
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     this._triggerTimerBehaviour();
-  },
+  }
 
-  _triggerTimerBehaviour: function() {
+  componentWillUnmount () {
+    TimerMixin.clearTimeout(this.timer);
+  }
+
+  _triggerTimerBehaviour() {
   	if(this.state.remainingTime == 0) {
   		this.setState({isTimerActive: false});
 	    this._handleNextButtonPress();
@@ -68,18 +72,18 @@ var ResultScreen = React.createClass({
     	this.setState({isTimerActive: true});
     	var value = this.state.remainingTime - 1;
       this.setState({remainingTime: value});
-      this.setTimeout(
-	      () => { 
-	      	console.log(this.state.remainingTime);
 
-	      	this._triggerTimerBehaviour();
-	      },
-	      1000
-	    );
+      this.timer = TimerMixin.setTimeout(
+        () => { 
+          log.warn(this.state.remainingTime);
+          this._triggerTimerBehaviour();
+        },
+        1000
+      );
    	}
-  },
+  }
 
-	render: function() {
+	render() {
     log.warn('ResultScreen');
     log.warn('render grid result with props ' + this.props);
 
@@ -124,9 +128,8 @@ var ResultScreen = React.createClass({
         </View>
       </View>
     );
-  },
-
-});
+  }
+};
 
 function _getImageStyle (){
   var value = PixelRatio.get();
@@ -136,6 +139,7 @@ function _getImageStyle (){
     height: size,
   }
 }
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,

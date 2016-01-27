@@ -9,13 +9,16 @@ var {
   Image,
   TouchableHighlight,
   Navigator,
-  ListView
+  ListView,
+  Component
 } = React;
 
 
 var AvatarCell = require('../Views/AvatarCell');
 
 var config = require('../../config');
+
+// var Orientation = require('react-native-orientation-listener');
 
 var ResultScreen = require('./ResultScreen');
 
@@ -27,12 +30,14 @@ var lastUsers = [];
 var guessedPeople = 0;
 var totalAttempts = 0;
 
-var GridScreen = React.createClass({
-
+class GridScreen extends Component {  
   //setting initial stato for loading and datasource
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    // this.orientationListener = undefined;
+    this.state = {
       isLoading: false,
+      // orientation: "UNKNOWN",
       message: "",
       users: [],
       target: "",
@@ -43,57 +48,57 @@ var GridScreen = React.createClass({
       }),
       gameStatus: "start",
     };
-  },
-
-  getDataSource: function(users: Array<any>): ListView.DataSource {
+  }
+  
+  getDataSource (users: Array<any>): ListView.DataSource {
     return this.state.dataSource.cloneWithRows(users);
-  },
+  }
 
-getAvatars: function() {
-  this.setState({ isLoading: true });
+  getAvatars() {
+    this.setState({ isLoading: true });
 
-  var URL = config.getSlackUserListURL();
-  log.info(URL);
+    var URL = config.getSlackUserListURL();
+    log.info(URL);
 
-  fetch(URL)
-    .then(response => this._handleSlackResponse(response))
-    .catch(error => 
-      this.setState({
-          isLoading: false,
-          message: 'Something bad happened ' + error
-      }));
-},
+    fetch(URL)
+      .then(response => this._handleSlackResponse(response))
+      .catch(error => 
+        this.setState({
+            isLoading: false,
+            message: 'Something bad happened ' + error
+        }));
+  }
 
-//parsing the profile to get the thumbnail and combine it with the name
-_handleSlackResponse: function(response) {
-      this.setState({ isLoading: false , message: '' });
-      
-      
-      var jsonValue = JSON.parse(response._bodyInit);
+  //parsing the profile to get the thumbnail and combine it with the name
+  _handleSlackResponse (response) {
+    this.setState({ isLoading: false , message: '' });
+    
+    
+    var jsonValue = JSON.parse(response._bodyInit);
 
-      log.info(jsonValue);
+    log.info(jsonValue);
 
-      if (jsonValue.members) {
-        var users = [];
+    if (jsonValue.members) {
+      var users = [];
 
-        for (var i = jsonValue.members.length - 1; i >= 0; i--) {
-          var obj = jsonValue.members[i];
-          if ((obj.real_name !== undefined) && (obj.profile.image_192 !== undefined && !obj.is_restricted)) {
-            log.info('adding ' + obj.real_name);
-            users.push({"name": obj.real_name, "avatar": obj.profile.image_192});            
-          }
-        };
-        
-        log.info('setting users ' + users.length);
-        this.setState({ users: users});
-        
+      for (var i = jsonValue.members.length - 1; i >= 0; i--) {
+        var obj = jsonValue.members[i];
+        if ((obj.real_name !== undefined) && (obj.profile.image_192 !== undefined && !obj.is_restricted)) {
+          log.info('adding ' + obj.real_name);
+          users.push({"name": obj.real_name, "avatar": obj.profile.image_192});            
+        }
       };
+      
+      log.info('setting users ' + users.length);
+      this.setState({ users: users});
+      
+    };
 
     this._completionAvatarRequest();
-  },
+  }
 
   //called when all the users are retrieved
-  _completionAvatarRequest: function() {
+  _completionAvatarRequest () {
     log.warn("_completionAvatarRequest " + this.state.users);
     this.setState({
       isLoading: false,
@@ -102,16 +107,37 @@ _handleSlackResponse: function(response) {
 
     //once all the avatars are gotten select a target
     this._getRandomUser()
-  },
+  }
 
-  componentDidMount: function(){
+  componentDidMount (){
     this.getAvatars();
-  },
 
-  _handleBackButtonPress: function() {
+    // this.orientationListener = Orientation.addListener(this._setOrientation);
+
+  }
+
+  componentWillUnmount() {
+    log.error("removeListener");
+
+    // this.orientationListener.remove();
+  }
+
+  // _setOrientation(data) {
+
+  //   log.error(data);
+
+  //   if (data.orientation != this.state.orientation) {
+  //     this.setState({
+  //       orientation: data.orientation,
+  //     });
+  //   }
+  // }
+
+  _handleBackButtonPress () {
     this.props.navigator.pop();
-  },
-  _handleNextButtonPress: function() {
+  }
+
+  _handleNextButtonPress () {
     log.warn(this.state.target.name + '-' + this.state.selectedUser.name + '-' + this.state.gameStatus);
 
     this.props.navigator.push({
@@ -121,9 +147,9 @@ _handleSlackResponse: function(response) {
                 selectedUser: this.state.selectedUser,
                 state: this.state.gameStatus}
         });
-  },
+  }
 
-  _selectUser: function(user: Object) {
+  _selectUser (user: Object) {
     log.info('selected ' + user.name);
 
     this.setState({selectedUser: user});
@@ -136,26 +162,25 @@ _handleSlackResponse: function(response) {
     else {
       this._lose();
     }
+  }
 
-  },
-
-  _win: function() {
+  _win () {
     this.setState({gameStatus: "won"});
     this._handleNextButtonPress();
-  },
+  }
 
-  _lose: function() {
+  _lose () {
     this.setState({gameStatus: "lost"});
     this._handleNextButtonPress();
-  },
+  }
 
-  renderRow: function(
+  renderRow (
     user: Object,
     sectionID: number | string,
     rowID: number | string,
     highlightRowFunc: (sectionID: ?number | string, rowID: ?number | string) => void,
   ) {
-    log.info("row " + user.name);
+    log.info("row " + user.name + " - " + this);
     return (
       <AvatarCell
         key={user.id}
@@ -165,9 +190,9 @@ _handleSlackResponse: function(response) {
         user={user}
       />
     );
-  },
+  }
 
-  _getRandomUser: function(): obj {
+  _getRandomUser () : obj {
     log.info('_getRandomUser');
 
     var users = this.state.users.slice();
@@ -220,15 +245,15 @@ _handleSlackResponse: function(response) {
       };
     };
 
-    log.warn('target ' + target);
+    log.info('target ' + target);
     return target;
-  },
+  }
 
-  render: function() {
+  render () {
 
     var GameLogic = require('../Views/GameLogic');
 
-    log.warn('render grid ' + this.state.dataSource.getRowCount() + ' target ' + this.state.target);
+    log.info('render grid ' + this.state.dataSource.getRowCount() + ' target ' + this.state.target);
     var content = this.state.dataSource.getRowCount() === 0 ?
       <Label
         isLoading={this.state.isLoading}
@@ -237,7 +262,7 @@ _handleSlackResponse: function(response) {
         ref="listview"
         contentContainerStyle={styles.list}
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
+        renderRow={this.renderRow.bind(this)}
         automaticallyAdjustContentInsets={true}
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps={true}
@@ -256,12 +281,12 @@ _handleSlackResponse: function(response) {
         </View>
       </View>
     );
-  },
-});
+  }
+};
 
-var Label = React.createClass({
+class Label extends Component {
 
-  render: function() {
+  render() {
     log.info("render label");
     var text = '';
     if (this.props.filter) {
@@ -278,7 +303,7 @@ var Label = React.createClass({
       </View>
     );
   }
-});
+};
 
 var styles = StyleSheet.create({
   list: {
