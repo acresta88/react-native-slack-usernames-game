@@ -23,6 +23,8 @@ var {
 var AvatarCell = require('../Views/AvatarCell');
 import TimerMixin from 'react-timer-mixin';
 
+var LoadingCircleView = require('../Views/LoadingCircleView');
+
 var log = require('loglevel');
 
 class ResultScreen extends Component {
@@ -42,51 +44,58 @@ class ResultScreen extends Component {
 
   _handleNextButtonPress() {
   	if(this.state.isTimerActive) {
-  		
+  		log.warn('trying to close results while the timer is active');
   	}
   	else {
 	   	var GridScreen = require('./GridScreen');
 
+      log.warn('pushing ' + GridScreen);
 	    this.props.navigator.push({
 	          component: 'GridScreen',
 	          title: 'GridScreen',
-	          passProps: { myProp: 'foo' }
 	    });  		
   	}
   }
 
   componentDidMount() {
+    log.warn('componentDidMount time = ' + this.state.remainingTime);
+
     this._triggerTimerBehaviour();
   }
 
   componentWillUnmount () {
+    log.warn('componentWillUnmount ' + this.timer);
     TimerMixin.clearTimeout(this.timer);
   }
 
   _triggerTimerBehaviour() {
   	if(this.state.remainingTime == 0) {
+      log.warn('_triggerTimerBehaviour time = ' + this.state.remainingTime);
+
   		this.setState({isTimerActive: false});
 	    this._handleNextButtonPress();
    	}
     else {
+      log.warn('_triggerTimerBehaviour time = ' + this.state.remainingTime);
+
     	this.setState({isTimerActive: true});
     	var value = this.state.remainingTime - 1;
       this.setState({remainingTime: value});
 
       this.timer = TimerMixin.setTimeout(
         () => { 
-          log.warn(this.state.remainingTime);
           this._triggerTimerBehaviour();
         },
         1000
       );
+
    	}
   }
 
 	render() {
-    log.warn('ResultScreen');
+    log.info('ResultScreen');
     log.warn('render grid result with props ' + this.props);
-
+    log.warn('render grid with time' + this.state.remainingTime);
     var correctPerson = this.props.state == 'lost' ? <Text style={styles.rightUserText}>This is {this.props.user.name}</Text> : <Text />;
 		var label = this.props.state == 'lost' ? 
 			<Text style={[styles.text, styles.textMarginLost]}>Next challenge in...</Text> :
@@ -100,10 +109,6 @@ class ResultScreen extends Component {
      
      	var GameLogic = require('../Views/GameLogic');
    		
-      log.warn('props result screen ');
-      for (var key in this.props) {
-        log.warn(key + '-' + this.props[key]);
-      };
     return (
       <View style={styles.container}>
       	<View style={styles.containerGameLogic}>
@@ -119,9 +124,9 @@ class ResultScreen extends Component {
         	<View>
 		        <TouchableElement
 		          onPress={this._handleNextButtonPress}>
-		          <View style={{width: 50, height: 50}}>
-			      		<Text style={styles.text}>{this.state.remainingTime}</Text>
-		      		</View>
+              <View>
+                <LoadingCircleView time={this.state.remainingTime}/>
+              </View>
 		        </TouchableElement>
 		      </View> 
 		      

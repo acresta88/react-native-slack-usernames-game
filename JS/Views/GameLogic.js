@@ -13,11 +13,13 @@ var {
 var log = require('loglevel');
 
 var GameLogic = React.createClass({
+  
   render: function() {
     var state = this.props.state;
     log.info('state ' + state);
+
     var user = this.props.user;
-    log.warn('user ' +user.name);
+    log.info('user ' +user.name);
 
     var selectedUser = this.props.selectedUser;
     log.info('selecteduser ' + selectedUser.name);

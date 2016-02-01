@@ -287,15 +287,8 @@ class GridScreen extends Component {
 class Label extends Component {
 
   render() {
-    log.info("render label");
-    var text = '';
-    if (this.props.filter) {
-      text = `No results"`;
-    } else if (!this.props.isLoading) {
-      // If we're looking at the latest movies, aren't currently loading, and
-      // still have no results, show a message
-      text = 'No users found';
-    }
+
+    let text = 'No results';
 
     return (
       <View style={[styles.LabelContainer, styles.centerText]}>

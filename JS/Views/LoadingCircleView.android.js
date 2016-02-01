@@ -19,58 +19,54 @@ var {
   requireNativeComponent
 } = React;
 
+var log = require('loglevel');
 
-var Spinner = require('react-native-spinkit');
+// var Spinner = require('react-native-circle-view');
 
-var value = PixelRatio.get();
+// var value = PixelRatio.get();
 
-let CIRCLE_SIZE = 50 + 10 * value;
-let CIRCLE_MARGIN = 10 + 5 * value;
+// let CIRCLE_SIZE = 50 + 10 * value;
+// let CIRCLE_MARGIN = 10 + 5 * value;
 
 class LoadingCircleView extends React.Component {
 
-  constructor(props: Object): void {
-    super();
-    this.state = {
-      isActive: false,
-      pop: new Animated.Value(0),
-    };
-  }
+//      <Spinner style= {styles.spinner} isVisible={true} size={CIRCLE_SIZE} type={'ArcAlt'} color={'#04b6cd'} >
 
-  render(): ReactElement {
-  	console.log(this.props.time);
+  render() {
+  	log.warn("rendering LoadingCircleView");
+
   	return (
-      <Spinner style= {styles.spinner} isVisible={true} size={CIRCLE_SIZE} type={'ArcAlt'} color={'#04b6cd'} >
-        <View style={[styles.textContainer, styles.centralAlignment]}>
-          <Text style={styles.countdown}>{this.props.time}</Text>
-          <Text style={styles.countdownUnit}>s</Text>
-        </View>
-      </Spinner>
-	);
+              <View styles={styles.progress}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.countdown}>{this.props.time}</Text>
+                  <Text style={styles.countdownUnit}>s</Text>
+                </View>
+              </View>	  
+    );
   }
-}
+};
 
 var styles = StyleSheet.create({
-  centralAlignment: {
-  	justifyContent: 'center', 
-  	alignItems: 'center'
+  progress: {
+    width: 50,
+    height: 50
   },
   spinner: {
-    marginTop: CIRCLE_MARGIN,
+    marginTop: 0,
   },
   textContainer: {
     flex: 1, 
+    alignItems: 'center',
     flexDirection: 'row', 
-    alignItems: 'flex-end', 
-    backgroundColor: 'rgba(0,0,0,0)'
+    justifyContent: 'flex-end'
   },
   countdown: {
-  	fontSize: 30,
-  	color: "#dddddd",
+    fontSize: 30,
+    color: "#dddddd",
   },
   countdownUnit: {
-  	fontSize: 16,
-  	color: "#dddddd",
+    fontSize: 16,
+    backgroundColor: 'green',
   }
 });
 
