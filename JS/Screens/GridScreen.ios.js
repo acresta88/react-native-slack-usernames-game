@@ -9,7 +9,8 @@ var {
   Image,
   TouchableHighlight,
   Navigator,
-  ListView
+  ListView,
+  Component
 } = React;
 
 

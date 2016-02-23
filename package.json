@@ -12,6 +12,7 @@
     "react-timer-mixin": "*",
     "loglevel": "*",
     "react-native-spinkit": "git+https://github.com/acresta88/react-native-spinkit.git",
-    "react-native-device": "*"
+    "react-native-device": "*",
+    "react-native-circle-view": "*"
   }
 }

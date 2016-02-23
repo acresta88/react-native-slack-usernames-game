@@ -15,45 +15,21 @@ var {
 var Device = require('react-native-device');
 
 var log = require("loglevel");
-var Orientation = require('react-native-orientation'); //only for ios
 
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 
 var AvatarCell = React.createClass({
-  //setting initial stato for loading and datasource
   getInitialState: function() {
     return {
-      orientation: "UNKNOWN",
+      orientation: "PORTRAIT",
     };
-  },
-  _orientationDidChange: function(orientation) {
-    this.setState({orientation: orientation});
-  },
-
-  componentDidMount: function(){
-    Orientation.addOrientationListener(this._orientationDidChange);
-  },
-
-  componentWillUnmount: function() {
-    Orientation.getOrientation((err,orientation)=> {
-        log.info("Current Device Orientation: ", orientation);
-    });
-    Orientation.removeOrientationListener(this._orientationDidChange);
   },
 
   render: function() {
-
-    var TouchableElement = TouchableHighlight;
-
-    if (Platform.OS === 'android') {
-      TouchableElement = TouchableNativeFeedback;
-    }
-
-    log.warn("render cell " + this.props.user.name + " " + this.props.orientation);
     return (
       <View>
-        <TouchableElement
+        <TouchableHighlight
           onPress={this.props.onSelect}
           onShowUnderlay={this.props.onHighlight}
           onHideUnderlay={this.props.onUnhighlight}>
@@ -61,7 +37,7 @@ var AvatarCell = React.createClass({
               source={{uri: this.props.user.avatar}}
               style={_getImageStyle(this.state.orientation)}
             />
-        </TouchableElement>
+        </TouchableHighlight>
       </View>         
     );
   }
