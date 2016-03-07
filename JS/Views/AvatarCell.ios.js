@@ -12,7 +12,6 @@ var {
   View
 } = React;
 
-var Device = require('react-native-device');
 
 var log = require("loglevel");
 
@@ -43,7 +42,7 @@ var AvatarCell = React.createClass({
   }
 });
 
-var elemsForLine = Device.isIpad() ? 5 : 3;
+var elemsForLine = 3; //Device.isIpad() ? 5 : 
 function _getImageStyle(orientation): StyleObj {
   
   var pageWidth = windowSize.width;
