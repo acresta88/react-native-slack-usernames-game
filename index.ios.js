@@ -36,18 +36,11 @@ var Orientation = require('react-native-orientation'); //only for ios
   
 var IntroScreen = require('./JS/Screens/IntroScreen');
 
-var Device = require('react-native-device');
 
 var FriendlyGame = React.createClass({
 
   render: function() {    
       Orientation.lockToPortrait();      
-    // if(Device.isIphone()) {
-    //   Orientation.lockToPortrait();      
-    // } 
-    // else {
-    //   Orientation.lockToLandscape();
-    // }
  
     return (
       <View style= {styles.container}>
